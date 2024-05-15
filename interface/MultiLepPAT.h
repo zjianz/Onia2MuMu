@@ -274,53 +274,36 @@ virtual int GetMissesAfter(const EventSetup& setup, const vector<reco::Track>& t
 
 
  //xining
-  unsigned int         Jpsi1_nmumuonly;
-  vector<float> *Jpsi1_mumuonlyMass,*Jpsi1_mumuonlyMassErr, 
-    * Psi2S_JPiPiMass, *Psi2S_JPiPiMassErr, 
-    * Psi2S_cs_JPiPiMass,* Psi2S_cs_JPiPiVtxProb,* Psi2S_cs_JPiPiFit_Chi2 ,*Psi2S_cs_JPiPiFit_ndof,
-    *Psi2S_px,*Psi2S_py,*Psi2S_pz	,*Psi2S_cs_px,*Psi2S_cs_py,*Psi2S_cs_pz  ,
-    *Psi2S_Pi1_pt, *Psi2S_Pi2_pt,*Psi2S_Pi1_deltaR, *Psi2S_Pi2_deltaR ,
-    *Psi2S_mu1Idx, *Psi2S_mu2Idx, 
-    *Jpsi2_mumuonlyMass34, *Jpsi2_mumuonlyMassErr34,
-    *Jpsi2_mumuonly34VtxProb, *Jpsi2_mumuonly34Fit_Chi2, *Jpsi2_mumuonly34Fit_ndof, 
-    *Jpsi2_mumuonly34_px, *Jpsi2_mumuonly34_py, *Jpsi2_mumuonly34_pz, 
-    *Jpsi2_cs_mumuonlyMass34, *Jpsi2_cs_mumuonly34VtxProb, *Jpsi2_cs_mumuonly34Fit_Chi2, *Jpsi2_cs_mumuonly34Fit_ndof,
-    *Jpsi2_cs_mumuonly34_px, *Jpsi2_cs_mumuonly34_py, *Jpsi2_cs_mumuonly34_pz, 
-    *XMass, *XMassErr,  
-    *Jpsi1_mumuonlyVtxProb, *Jpsi1_mumuonlyFit_Chi2 , *Jpsi1_mumuonlyFit_ndof, 
-    *Psi2S_JPiPiVtxProb, *Psi2S_JPiPiFit_Chi2 ,*Psi2S_JPiPiFit_ndof, *Jpsi1_mumuonlyPx, *Jpsi1_mumuonlyPy, *Jpsi1_mumuonlyPz,  
-    *Jpsi1_mumuonlymu1Idx, *Jpsi1_mumuonlymu2Idx, *Jpsi2_mumuonlymu3Idx, *Jpsi2_mumuonlymu4Idx,
-    *X_mu1Idx, *X_mu2Idx,*X_mu3Idx, *X_mu4Idx,
-    *X_mass, *X_Fit_VtxProb, *X_Fit_Chi2, *X_Fit_ndof,
-    *X_JPiPi_mass, *X_JPiPi_VtxProb, *X_JPiPi_px, *X_JPiPi_py, *X_JPiPi_pz,
-    *X_JPiPi_massErr, 
-    *X_px, *X_py,*X_pz, *X_JPiPimass, *X_Jpsi1mass, *X_Jpsi1prob ,
-    *X_Jpsi2mass,*X_Jpsi2prob, *X_Jpsi2px,  *X_Jpsi2py,  *X_Jpsi2pz,*X_Jpsi2massErr, 
-    *X_4mumass, *X_4muprob,*X_4mupx, *X_4mupy,*X_4mupz,*X_4mumassErr, 
-    *X_Jpsi2_mumuonly34VtxProb, *X_Psi2S_px, *X_Psi2S_py, *X_Psi2S_pz,
-    *X_JPiPi_Pi1px, *X_JPiPi_Pi1py,*X_JPiPi_Pi1pz,
-    *X_JPiPi_Pi2px, *X_JPiPi_Pi2py,*X_JPiPi_Pi2pz, *X_JPiPi_Pi1DeltaR, *X_JPiPi_Pi2DeltaR, *X_JPiPi_Pi1pt, *X_JPiPi_Pi2pt, 
-    *X_Jpsi1px, *X_Jpsi1py, *X_Jpsi1pz, *X_Jpsi1massErr, 
-    *X_mu12cs_px, *X_mu12cs_py, *X_mu12cs_pz, 
-    *X_mu1px, *X_mu1py, *X_mu1pz,
-    *X_mu2px, *X_mu2py, *X_mu2pz,
-    *X_JPiPics_px, *X_JPiPics_py, *X_JPiPics_pz,
-    *X_mu34cs_px, *X_mu34cs_py, *X_mu34cs_pz,
-    *Jpsi1_mumuonlyctau, *Jpsi1_mumuonlyctauerr;  
+  vector<float> 
+    *X_mu1Idx, *X_mu2Idx, *X_mu3Idx, *X_mu4Idx,
+    *X_mass, *X_VtxProb, *X_Chi2, *X_ndof, *X_px, *X_py, *X_pz, *X_massErr, 
+    *X_JPiPi_mass, *X_JPiPi_VtxProb, *X_JPiPi_Chi2, *X_JPiPi_ndof, *X_JPiPi_px, *X_JPiPi_py, *X_JPiPi_pz, *X_JPiPi_massErr, 
+    *X_Jpsi1_mass, *X_Jpsi1_VtxProb, *X_Jpsi1_Chi2, *X_Jpsi1_ndof, *X_Jpsi1_px, *X_Jpsi1_py, *X_Jpsi1_pz, *X_Jpsi1_massErr, 
+    *X_Jpsi2_mass, *X_Jpsi2_VtxProb, *X_Jpsi2_Chi2, *X_Jpsi2_ndof, *X_Jpsi2_px, *X_Jpsi2_py,  *X_Jpsi2_pz,*X_Jpsi2_massErr, 
+    *X_JPiPi_Pi1Idx, *X_JPiPi_Pi2Idx,
+    *X_JPiPi_Pi1px, *X_JPiPi_Pi1py, *X_JPiPi_Pi1pz,
+    *X_JPiPi_Pi2px, *X_JPiPi_Pi2py, *X_JPiPi_Pi2pz; 
 
-  vector<int> *mumuonlymuoverlapped, *Jpsi1_mumuonlyChg;
-  
-//xining  
+//added for mass constrain on 1208, cs stands for some kind of mass constraint
+// Variables for Jpsi and Pion
+ vector <float> *cs_X_Jpsi1_mass, *cs_X_Jpsi1_VtxProb, *cs_X_Jpsi1_Chi2, *cs_X_Jpsi1_ndof, *cs_X_Jpsi1_px, *cs_X_Jpsi1_py, *cs_X_Jpsi1_pz, *cs_X_Jpsi1_massErr,
+ *cs_X_Jpsi2_mass, *cs_X_Jpsi2_VtxProb, *cs_X_Jpsi2_Chi2, *cs_X_Jpsi2_ndof, *cs_X_Jpsi2_px,  *cs_X_Jpsi2_py,  *cs_X_Jpsi2_pz, *cs_X_Jpsi2_massErr;
+// Notice that Jpsi and Pion information is actually the same as before, 
+// because JPiPi MC fit doesn't change them by default.  
+// So Jpsi information retrived from Jpsi MC fit but not JPiPi MC fit. 
+// And Pion information is actually the same as that in 4mu2pi X fit so there are no variables for them
+// If you do what to change them, please check JPiPi MC fit and information stored carefully.
 
-//added for mass constrain on 1208
- vector<float> *cs_X_mass, *cs_X_Fit_VtxProb, *cs_X_Fit_Chi2, *cs_X_Fit_ndof,
- *cs_X_mu1Idx, *cs_X_mu2Idx,*cs_X_mu3Idx, *cs_X_mu4Idx,
- *cs_X_Jpsi1mass, *cs_X_Jpsi1prob, *cs_X_Jpsi1px, *cs_X_Jpsi1py, *cs_X_Jpsi1pz, *cs_X_Jpsi1massErr,
- *cs_X_Jpsi2mass,*cs_X_Jpsi2prob, *cs_X_Jpsi2px,  *cs_X_Jpsi2py,  *cs_X_Jpsi2pz,*cs_X_Jpsi2massErr,
- *cs_X_JPiPi_mass, *cs_X_JPiPi_VtxProb, *cs_X_JPiPi_px, *cs_X_JPiPi_py, *cs_X_JPiPi_pz,*cs_X_JPiPi_massErr,
- *cs_X_JPiPinoMC_mass, *cs_X_JPiPinoMC_massErr,
- *cs_X_JPiPi_Pi1px, *cs_X_JPiPi_Pi1py,*cs_X_JPiPi_Pi1pz,
- *cs_X_JPiPi_Pi2px, *cs_X_JPiPi_Pi2py,*cs_X_JPiPi_Pi2pz;
+// Variables for JPiPi fitted with MassConstraint Jpsi1
+ vector<float> *cs_X_JPiPi_mass, *cs_X_JPiPi_VtxProb, *cs_X_JPiPi_Chi2, *cs_X_JPiPi_ndof, *cs_X_JPiPi_px ,*cs_X_JPiPi_py, *cs_X_JPiPi_pz, *cs_X_JPiPi_massErr;
+
+// Variables for X and JPiPi; MassConstraint to Psi2S and X3782 
+ vector<float> *cs_X_mass_Psi2S, *cs_X_VtxProb_Psi2S, *cs_X_Chi2_Psi2S, *cs_X_ndof_Psi2S, *cs_X_px_Psi2S, *cs_X_py_Psi2S, *cs_X_pz_Psi2S, *cs_X_massErr_Psi2S,
+ *cs_X_JPiPi_mass_Psi2S, *cs_X_JPiPi_VtxProb_Psi2S, *cs_X_JPiPi_Chi2_Psi2S, *cs_X_JPiPi_ndof_Psi2S, *cs_X_JPiPi_px_Psi2S, *cs_X_JPiPi_py_Psi2S, *cs_X_JPiPi_pz_Psi2S, *cs_X_JPiPi_massErr_Psi2S;
+
+ vector<float> *cs_X_mass_X3872, *cs_X_VtxProb_X3872, *cs_X_Chi2_X3872, *cs_X_ndof_X3872, *cs_X_px_X3872, *cs_X_py_X3872, *cs_X_pz_X3872, *cs_X_massErr_X3872,
+ *cs_X_JPiPi_mass_X3872, *cs_X_JPiPi_VtxProb_X3872, *cs_X_JPiPi_Chi2_X3872, *cs_X_JPiPi_ndof_X3872, *cs_X_JPiPi_px_X3872, *cs_X_JPiPi_py_X3872, *cs_X_JPiPi_pz_X3872, *cs_X_JPiPi_massErr_X3872;
+
 
 //doMC
 vector<float> 
@@ -328,10 +311,10 @@ vector<float>
 *MC_X_py,
 *MC_X_pz,
 *MC_X_mass,
-*MC_Dau_jpsipx,
-*MC_Dau_jpsipy,
-*MC_Dau_jpsipz,
-*MC_Dau_jpsimass,
+*MC_Dau_Jpsipx,
+*MC_Dau_Jpsipy,
+*MC_Dau_Jpsipz,
+*MC_Dau_Jpsimass,
 *MC_Dau_psi2spx,
 *MC_Dau_psi2spy,
 *MC_Dau_psi2spz,
@@ -342,10 +325,10 @@ vector<float>
 *MC_Granddau_mu2px,
 *MC_Granddau_mu2py,
 *MC_Granddau_mu2pz,
-*MC_Granddau_jpsipx,
-*MC_Granddau_jpsipy,
-*MC_Granddau_jpsipz,
-*MC_Granddau_jpsimass,
+*MC_Granddau_Jpsipx,
+*MC_Granddau_Jpsipy,
+*MC_Granddau_Jpsipz,
+*MC_Granddau_Jpsimass,
 *MC_Granddau_pi1px,
 *MC_Granddau_pi1py,
 *MC_Granddau_pi1pz,
@@ -361,11 +344,11 @@ vector<float>
 
 vector<int>
 *MC_X_chg,
-*MC_Dau_jpsipdgId,
+*MC_Dau_JpsipdgId,
 *MC_Dau_psi2spdgId,
 *MC_Granddau_mu1pdgId,
 *MC_Granddau_mu2pdgId,
-*MC_Granddau_jpsipdgId,
+*MC_Granddau_JpsipdgId,
 *MC_Granddau_pi1pdgId,
 *MC_Granddau_pi2pdgId,
 *MC_Grandgranddau_mu3pdgId,
@@ -392,7 +375,7 @@ vector<float>
 *Match_pi2py,
 *Match_pi2pz; 
 
-  float mybxlumicorr,myrawbxlumi;
+  // float mybxlumicorr,myrawbxlumi;
   ////////////////////////  
 
   
