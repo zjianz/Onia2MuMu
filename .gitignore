@@ -1,4 +1,9 @@
-test
+test/crabData/crab_*
+test/crabData/crab3_*_MINIAOD*
+*.log
+*.root
+*.out
+.gitignore
 __pycache__
 *.swp
 *.swo

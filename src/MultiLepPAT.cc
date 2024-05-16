@@ -745,7 +745,13 @@ void MultiLepPAT::analyze(const edm::Event &iEvent, const edm::EventSetup &iSetu
 			}
 
 			// mass constrain for Jpsi1 from psi2s:
+			bool flag_jpsi1 = true;
+			bool flag_jpsi2 = true;
 			KinematicParticleFitter mu12_fitter_cs;
+			RefCountedKinematicParticle Jpsi1_vFit_cs;
+			RefCountedKinematicVertex Jpsi1_vFit_vertex_cs;
+			KinematicParameters mymumupara_cs;
+			double Jpsi1_vtxprob_cs;
 			Error_t = false;
 			try
 			{
@@ -757,20 +763,19 @@ void MultiLepPAT::analyze(const edm::Event &iEvent, const edm::EventSetup &iSetu
 			}
 			if(Error_t || !Jpsi1VertexFitTree->isValid())
 			{
-				continue;
+				flag_jpsi1 = false;
+			}else
+			{
+				Jpsi1VertexFitTree->movePointerToTheTop();
+				Jpsi1_vFit_cs = Jpsi1VertexFitTree->currentParticle();
+				Jpsi1_vFit_vertex_cs = Jpsi1VertexFitTree->currentDecayVertex();
+				mymumupara_cs = Jpsi1_vFit_cs->currentState().kinematicParameters();
+				Jpsi1_vtxprob_cs = ChiSquaredProbability((double)(Jpsi1_vFit_vertex_cs->chiSquared()), (double)(Jpsi1_vFit_vertex_cs->degreesOfFreedom()));
 			}
-			Jpsi1VertexFitTree->movePointerToTheTop();
-			RefCountedKinematicParticle Jpsi1_vFit_cs = Jpsi1VertexFitTree->currentParticle();
-			RefCountedKinematicVertex Jpsi1_vFit_vertex_cs = Jpsi1VertexFitTree->currentDecayVertex();
-			KinematicParameters mymumupara_cs = Jpsi1_vFit_cs->currentState().kinematicParameters();
-
-			double Jpsi1_vtxprob_cs = ChiSquaredProbability((double)(Jpsi1_vFit_vertex_cs->chiSquared()), (double)(Jpsi1_vFit_vertex_cs->degreesOfFreedom()));
-
 			TLorentzVector P4_mu1;
 			P4_mu1.SetPtEtaPhiM(iMuon1->track()->pt(), iMuon1->track()->eta(), iMuon1->track()->phi(), myMumass);
 			TLorentzVector P4_mu2;
 			P4_mu2.SetPtEtaPhiM(iMuon2->track()->pt(), iMuon2->track()->eta(), iMuon2->track()->phi(), myMumass);
-
 			// mu3mu4(X6900->Jpsi)
 			for (edm::View<pat::Muon>::const_iterator iMuon3 = thePATMuonHandle->begin(); // MINIAOD
 				 iMuon3 != thePATMuonHandle->end(); ++iMuon3)
@@ -850,7 +855,11 @@ void MultiLepPAT::analyze(const edm::Event &iEvent, const edm::EventSetup &iSetu
 					}
 
 					// mass constrain for Jpsi from X6900:
-					KinematicParticleFitter mu34_fitter_cs;
+					KinematicParticleFitter mu34_fitter_cs;	
+					RefCountedKinematicParticle Jpsi2_vFit_cs;
+					RefCountedKinematicVertex Jpsi2_vFit_vertex_cs;
+					KinematicParameters mymumupara2_cs;
+					double Jpsi2_vtxprob_cs;
 					Error_t = false;
 					try
 					{
@@ -862,14 +871,15 @@ void MultiLepPAT::analyze(const edm::Event &iEvent, const edm::EventSetup &iSetu
 					}
 					if(Error_t || !Jpsi2VertexFitTree->isValid())
 					{
-						continue;
+						flag_jpsi2 = false;
+					}else
+					{
+						Jpsi2VertexFitTree->movePointerToTheTop();
+						Jpsi2_vFit_cs = Jpsi2VertexFitTree->currentParticle();
+						Jpsi2_vFit_vertex_cs = Jpsi2VertexFitTree->currentDecayVertex();
+						mymumupara2_cs = Jpsi2_vFit_cs->currentState().kinematicParameters();
+						Jpsi2_vtxprob_cs = ChiSquaredProbability((double)(Jpsi2_vFit_vertex_cs->chiSquared()), (double)(Jpsi2_vFit_vertex_cs->degreesOfFreedom()));
 					}
-					Jpsi2VertexFitTree->movePointerToTheTop();
-					RefCountedKinematicParticle Jpsi2_vFit_cs = Jpsi2VertexFitTree->currentParticle();
-					RefCountedKinematicVertex Jpsi2_vFit_vertex_cs = Jpsi2VertexFitTree->currentDecayVertex();
-					KinematicParameters mymumupara2_cs = Jpsi2_vFit_cs->currentState().kinematicParameters();
-					double Jpsi2_vtxprob_cs = ChiSquaredProbability((double)(Jpsi2_vFit_vertex_cs->chiSquared()), (double)(Jpsi2_vFit_vertex_cs->degreesOfFreedom()));
-
 					// psi2s
 					for (std::vector<edm::View<pat::PackedCandidate>::const_iterator>::const_iterator iTrack1ID = nonMuonPionTrack.begin(); // MINIAOD
 						 iTrack1ID != nonMuonPionTrack.end(); ++iTrack1ID)
@@ -1111,6 +1121,13 @@ void MultiLepPAT::analyze(const edm::Event &iEvent, const edm::EventSetup &iSetu
  * IF flag_cs_psi2s == true THEN DO save -9 for JPiPi to Psi2S
  * IF flag_cs_x3872 == true THEN DO save -9 for JPiPi to X3872
  */
+						
+						RefCountedKinematicTree JPiPiVertexFitTree_cs_vtx; 
+						if(flag_jpsi1 == false)
+						{
+							flag_vtx = false;
+						}else
+						{
 							vector<RefCountedKinematicParticle> JPiPiParticles_cs_vtx;
 							JPiPiParticles_cs_vtx.push_back(JPiPiFactory.particle(trackTT1, pion_mass, chi, ndf, pion_sigma));
 							JPiPiParticles_cs_vtx.push_back(JPiPiFactory.particle(trackTT2, pion_mass, chi, ndf, pion_sigma));
@@ -1118,7 +1135,6 @@ void MultiLepPAT::analyze(const edm::Event &iEvent, const edm::EventSetup &iSetu
 
 							KinematicParticleVertexFitter JPiPi_fitter_cs_vtx; 
 // Variables named with JPiPi_cs_vtx is for JPiPi fitted with 2pi and MassConstraint Jpsi1. And JPiPi_cs_Psi2S/X3872 (no _vtx and MassC target) defined below is for Final MassConstraint fit on JPiPi candidate
-							RefCountedKinematicTree JPiPiVertexFitTree_cs_vtx; 
 							Error_t = false;
 							try
 							{
@@ -1192,7 +1208,8 @@ void MultiLepPAT::analyze(const edm::Event &iEvent, const edm::EventSetup &iSetu
 								{
 									cs_X_Jpsi1_massErr->push_back(-9);
 								}
-								
+								if(flag_jpsi2 == true)
+								{
 								cs_X_Jpsi2_mass->push_back(Jpsi2_vFit_cs->currentState().mass());
 								cs_X_Jpsi2_VtxProb->push_back(Jpsi2_vtxprob_cs);
 								cs_X_Jpsi2_Chi2->push_back(double(Jpsi2_vFit_vertex_cs->chiSquared()));
@@ -1208,11 +1225,21 @@ void MultiLepPAT::analyze(const edm::Event &iEvent, const edm::EventSetup &iSetu
 								{
 									cs_X_Jpsi2_massErr->push_back(-9);
 								}
+								}else
+								{
+								cs_X_Jpsi2_mass->push_back(-9);
+								cs_X_Jpsi2_VtxProb->push_back(-9);
+								cs_X_Jpsi2_Chi2->push_back(-9);
+                                                                cs_X_Jpsi2_ndof->push_back(-9); 
+								cs_X_Jpsi2_px->push_back(-99999);
+								cs_X_Jpsi2_py->push_back(-99999);
+								cs_X_Jpsi2_pz->push_back(-99999);
+								}
 							}
 // Notice that Jpsi1 and Pion information is actually the same as before, because JPiPi MC fit doesn't change them by default. If you do what to change them, please check JPiPi MC fit and information stored carefully.
-
+						}
 							// JPiPi MassConstraint Fit to Psi2S
-							if (flag_vtx == true)
+							if (flag_vtx == true && flag_jpsi2 == true)
 							{ 	
 								KinematicParticleFitter JPiPi_fitter_cs_Psi2S;
 								RefCountedKinematicTree JPiPiVertexFitTree_cs_Psi2S;
@@ -1282,7 +1309,6 @@ void MultiLepPAT::analyze(const edm::Event &iEvent, const edm::EventSetup &iSetu
 										cs_X_Chi2_Psi2S->push_back((double)(X_vFit_vertex_cs_Psi2S->chiSquared()));
 										cs_X_ndof_Psi2S->push_back((double)(X_vFit_vertex_cs_Psi2S->degreesOfFreedom()));
 										cs_X_px_Psi2S->push_back(X_vFit_cs_Psi2S->currentState().kinematicParameters().momentum().x());
-std::cout<<"Psi2sPx "<<X_vFit_cs_Psi2S->currentState().kinematicParameters().momentum().x()<<std::endl;
 										cs_X_py_Psi2S->push_back(X_vFit_cs_Psi2S->currentState().kinematicParameters().momentum().y());
 										cs_X_pz_Psi2S->push_back(X_vFit_cs_Psi2S->currentState().kinematicParameters().momentum().z());
 
@@ -1300,7 +1326,7 @@ std::cout<<"Psi2sPx "<<X_vFit_cs_Psi2S->currentState().kinematicParameters().mom
 
 
 							// JPiPi MassConstraint Fit to X3872
-							if (flag_vtx == true)
+							if (flag_vtx == true && flag_jpsi2 == true)
 							{ 	
 								KinematicParticleFitter JPiPi_fitter_cs_X3872;
 								RefCountedKinematicTree JPiPiVertexFitTree_cs_X3872;
@@ -1354,7 +1380,6 @@ std::cout<<"Psi2sPx "<<X_vFit_cs_Psi2S->currentState().kinematicParameters().mom
 										cs_X_JPiPi_Chi2_X3872->push_back((double)(JPiPi_vFit_vertex_cs_X3872->chiSquared()));
 										cs_X_JPiPi_ndof_X3872->push_back((double)(JPiPi_vFit_vertex_cs_X3872->degreesOfFreedom()));
 										cs_X_JPiPi_px_X3872->push_back(JPiPi_vFit_cs_X3872->currentState().kinematicParameters().momentum().x());
-std::cout<<"X3872Px "<<JPiPi_vFit_cs_X3872->currentState().kinematicParameters().momentum().x();
 										cs_X_JPiPi_py_X3872->push_back(JPiPi_vFit_cs_X3872->currentState().kinematicParameters().momentum().y());
 										cs_X_JPiPi_pz_X3872->push_back(JPiPi_vFit_cs_X3872->currentState().kinematicParameters().momentum().z());
 										if (JPiPi_vFit_cs_X3872->currentState().kinematicParametersError().matrix()(6, 6) > 0)
